@@ -1,0 +1,55 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  description: Сервис сокращения URL
+  title: URL Shortener API
+  version: "1.0"
+paths:
+  /:
+    post:
+      consumes:
+      - text/plain
+      description: Принимает оригинальный URL в теле запроса, возвращает короткий
+        URL
+      parameters:
+      - description: Оригинальный URL
+        in: body
+        name: url
+        required: true
+        schema:
+          type: string
+      produces:
+      - text/plain
+      responses:
+        "201":
+          description: Сокращённый URL
+          schema:
+            type: string
+        "400":
+          description: Некорректный запрос
+          schema:
+            type: string
+      summary: Сократить URL
+      tags:
+      - shorten
+  /{id}:
+    get:
+      description: Редиректит на оригинальный URL по идентификатору
+      parameters:
+      - description: Идентификатор короткого URL
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "307":
+          description: Temporary Redirect
+        "400":
+          description: URL не найден
+          schema:
+            type: string
+      summary: Перейти по короткому URL
+      tags:
+      - shorten
+swagger: "2.0"
