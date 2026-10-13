@@ -4,7 +4,6 @@ import (
 	"errors"
 	"golang-shorten-tpl/internal/service"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -42,7 +41,6 @@ func (h *URLHandler) POSTHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "invalid URL", http.StatusBadRequest)
 			return
 		}
-		log.Printf("shorten failed: %v", err)
 		http.Error(w, "internal error", http.StatusInternalServerError)
 		return
 	}
