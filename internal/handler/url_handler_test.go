@@ -14,7 +14,7 @@ import (
 	"go.uber.org/mock/gomock"
 )
 
-const testBaseURL = "http://localhost: 8080"
+const testBaseURL = "http://localhost:8080"
 
 func TestURLHandler_POSTHandler(t *testing.T) {
 	tests := []struct {
@@ -53,7 +53,6 @@ func TestURLHandler_POSTHandler(t *testing.T) {
 			name:        "empty body -> 400",
 			requestBody: "",
 			mockSetup: func(m *mocks.MockService) {
-				// Валидацию делает service, handler лишь передаёт тело как есть.
 				m.EXPECT().
 					Shorten("").
 					Return("", service.ErrInvalidURL).
@@ -156,8 +155,6 @@ func TestURLHandler_GETHandler(t *testing.T) {
 			h := NewURLHandler(mockSvc, testBaseURL)
 
 			req := httptest.NewRequest(http.MethodGet, "/"+tt.id, nil)
-			// Хендлер вызывается напрямую, мимо ServeMux, поэтому {id}
-			// никто не разберёт: подставляем path value вручную (Go 1.22+).
 			req.SetPathValue("id", tt.id)
 			w := httptest.NewRecorder()
 
