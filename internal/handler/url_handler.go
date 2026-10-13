@@ -35,7 +35,6 @@ func (h *URLHandler) POSTHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	originalURL := string(body)
-	log.Printf("получено тело запроса: %q", originalURL)
 
 	id, err := h.service.Shorten(originalURL)
 	if err != nil {
@@ -43,7 +42,8 @@ func (h *URLHandler) POSTHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "invalid URL", http.StatusBadRequest)
 			return
 		}
-		http.Error(w, "invalid error", http.StatusBadRequest)
+		log.Printf("shorten failed: %v", err)
+		http.Error(w, "internal error", http.StatusInternalServerError)
 		return
 	}
 

@@ -62,7 +62,7 @@ func TestURLHandler_POSTHandler(t *testing.T) {
 			wantStatusCode: http.StatusBadRequest,
 		},
 		{
-			name:        "unexpected service error -> 400",
+			name:        "unexpected service error -> 500",
 			requestBody: "https://practicum.yandex.ru/",
 			mockSetup: func(m *mocks.MockService) {
 				m.EXPECT().
@@ -70,7 +70,7 @@ func TestURLHandler_POSTHandler(t *testing.T) {
 					Return("", errors.New("storage is down")).
 					Times(1)
 			},
-			wantStatusCode: http.StatusBadRequest,
+			wantStatusCode: http.StatusInternalServerError,
 		},
 	}
 
