@@ -41,7 +41,8 @@ func (h *URLHandler) POSTHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "invalid URL", http.StatusBadRequest)
 			return
 		}
-		http.Error(w, "invalid error", http.StatusBadRequest)
+		log.Printf("shorten failed: %v", err)
+		http.Error(w, "internal error", http.StatusInternalServerError)
 		return
 	}
 
