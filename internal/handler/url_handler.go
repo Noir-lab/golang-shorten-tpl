@@ -4,7 +4,6 @@ import (
 	"errors"
 	"golang-shorten-tpl/internal/service"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -35,7 +34,6 @@ func (h *URLHandler) POSTHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	originalURL := string(body)
-	log.Printf("получено тело запроса: %q", originalURL)
 
 	id, err := h.service.Shorten(originalURL)
 	if err != nil {
